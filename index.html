@@ -34,9 +34,13 @@
     const initialScale = projection.scale();
     const geoPath = d3.geoPath().projection(projection);
     const sensitivity = 58;
-    const gistURL = 'https://gist.githubusercontent.com/robcrock/a30f589308f73f234f46986a21676e30/raw/d1a632ced68f1cf115a5ca9af8baafa6920da05d/data_slim.csv';
+    // adjust links to original data sources
+    const urls = {
+        migration: 'https://gist.githubusercontent.com/robcrock/a30f589308f73f234f46986a21676e30/raw/d1a632ced68f1cf115a5ca9af8baafa6920da05d/data_slim.csv',
+        world: 'https://raw.githubusercontent.com/d3/d3.github.com/master/world-110m.v1.json'
+      };
 
-    d3.csv(gistURL, (error, data) => {
+    d3.csv(urls.migration, (error, data) => {
 
       const featureCollection = {
         "type": "FeatureCollection",
