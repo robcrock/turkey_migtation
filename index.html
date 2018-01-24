@@ -59,13 +59,13 @@
         return d3.descending(parseInt(a.event_id), parseInt(b.event_id));
       })
 
-      const singleEvent = sortedData.filter(function (d) {
-        return d.animal_id === 'Steamhouse 2';
-      })
+      // const singleEvent = sortedData.filter(function (d) {
+      //   return d.animal_id === 'Steamhouse 2';
+      // })
 
       var nestedData = d3.nest()
         .key(function (d) { return d.animal_id; })
-        .entries(singleEvent);
+        .entries(sortedData);
 
 
       nestedData.forEach(function (turkey) {
@@ -97,7 +97,7 @@
 
         featureCollection.features.push(turkeyObj)
 
-      console.log(geoPath(featureCollection));
+      // console.log(geoPath(featureCollection));
 
       // const land = topojson.feature(data, world.objects.land);
       const render = () => path
