@@ -29,13 +29,13 @@ d3.csv(gistURL, (error, data) => {
     return d3.descending(parseInt(a.event_id), parseInt(b.event_id));
   })
 
-  // const singleEvent = sortedData.filter(function(d) {
-  //   return d.animal_id === 'Butterball';
-  // })
+  const singleEvent = sortedData.filter(function(d) {
+    return d.animal_id === 'Steamhouse 2';
+  })
 
   var nestedData = d3.nest()
     .key(function (d) { return d.animal_id; })
-    .entries(sortedData);
+    .entries(singleEvent);
 
 
   nestedData.forEach(function (turkey) {
@@ -74,34 +74,6 @@ d3.csv(gistURL, (error, data) => {
 
 })
 
-// d3.csv('data.csv', (error, data) => {
-
-//   if (error) {
-//     return console.warn(error);
-//   }
-
-//   const outerWidth = 960,
-//     outerHeight = 420,
-//     margin = { top: 20, right: 10, bottom: 20, left: 20 };
-
-//   const innerWidth = outerWidth - margin.left - margin.right,
-//     innerHeight = outerHeight - margin.top - margin.bottom;
-
-//   var svg = d3.select('.chart-container').append('svg')
-//     .attr('width', outerWidth)
-//     .attr('height', outerHeight)
-//     .append('g')
-//     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-//     .attr('fill', '#ccc');
-
-//   svg.append('text')
-//     .text('MakeoverMonday Visualization')
-//     .attr('x', innerWidth / 2)
-//     .attr('y', innerHeight / 2)
-//     .attr('color', '#666')
-//     .style('font-family', 'Roboto')
-//     .style('font-size', '36px')
-//     .style('text-anchor', 'middle')
-//     .style('alignment-baseline', 'middle');
-
-// })
+/****************************/
+/* CODE FROM ONLINE EXAMPLE */
+/****************************/
