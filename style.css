@@ -18,6 +18,10 @@ svg {
   stroke-width: 0.3px;
   fill: none;
 }
-.flight-path {
+.turkey {
+  stroke: #D3D3D3;
+  stroke-width: 0.5px;
+}
+.route {
   stroke: #FF00FF;
 }
