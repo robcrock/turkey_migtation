@@ -24,12 +24,9 @@
     and center it (translate)
     and zoom in a certain amount (scale)
   */
-  const projection = d3.geoOrthographic()
+  const projection = d3.geoTwoPointEquidistant([-100, 25], [-70, 25])
     .translate( [width/2, height/2.65] )
-    .scale(200)
-    .clipAngle(90 + 1e-6)
-    .precision(.3)
-    .rotate([-275, 0]);
+    .scale(300);
 
   /*
     Create a path (geoPath)
