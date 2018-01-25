@@ -1,3 +1,15 @@
 svg {
   background: #efefef
 }
+.sphere {
+  fill: #3399CC;
+}
+.graticule {
+  fill: #3399CC;
+}
+.land {
+  fill: #CCCCCC;
+}
+.flight-path {
+  stroke: #FF00FF;
+}

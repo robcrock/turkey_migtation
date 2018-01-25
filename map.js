@@ -1,7 +1,7 @@
 (function() {
   const margin = { top: 50, left: 50, right: 50, bottom: 50 },
-    height = 400 - margin.top - margin.bottom,
-    width = 800 - margin.left - margin.right;
+    height = 540 - margin.top - margin.bottom,
+    width = 700 - margin.left - margin.right;
 
   const svg = d3.select('#map')
     .append('svg')
@@ -16,6 +16,7 @@
   */
   d3.queue()
     .defer(d3.json, 'data/world.json')
+    .defer(d3.csv, 'https://gist.githubusercontent.com/robcrock/a30f589308f73f234f46986a21676e30/raw/d1a632ced68f1cf115a5ca9af8baafa6920da05d/data_slim.csv')
     .await(ready);
 
   /*
@@ -24,11 +25,11 @@
     and zoom in a certain amount (scale)
   */
   const projection = d3.geoOrthographic()
-    .translate( [width/2, height/2] )
+    .translate( [width/2, height/2.65] )
     .scale(200)
     .clipAngle(90 + 1e-6)
     .precision(.3)
-    .rotate([-280, 0]);
+    .rotate([-275, 0]);
 
   /*
     Create a path (geoPath)
@@ -48,10 +49,9 @@
   svg.append("path")
     .datum(graticule)
     .attr("class", "graticule")
-    .attr("d", geoPath)
-    .style('fill', '#3399CC');
+    .attr("d", geoPath);
 
-  function ready(error, data) {
+  function ready(error, world, migration) {
 
     /*
       topojson.feature converts
@@ -59,9 +59,7 @@
       always pass it data, then data.objects.___something___
       then get .features out of it
     */
-    const land = topojson.feature(data, data.objects.ne_50m_land).features;
-
-    console.log(land);
+    const land = topojson.feature(world, world.objects.ne_50m_land).features;
 
     /*
       Add a path for each country
@@ -73,10 +71,65 @@
       .attr('class', 'land')
       .attr('d', geoPath);
 
-    /*
-      Add the cities
-      Get the x/y from the lat/long + projection
-    */
-  };
+    const featureCollection = {
+      "type": "FeatureCollection",
+      "features": [ /* append featuresObj */]
+    };
+    const featuresObj = {
+      "type": "Feature",
+      "geometry": { /* append geometryObj */ },
+      "properties": { /* append propertiesObj */ }
+    };
+    const geometryObj = {
+      "type": "LineString",
+      "coordinates": [ /* longitutde */, /* latitude */]
+    };
+    const propertiesObj = {
+      "study_timezone": ""
+    };
+    const singleTurkey = migration.filter(function (d) {
+      return d.animal_id === 'Steamhouse 2';
+    });
+    const singleTurkeySorted = singleTurkey.sort(function (a, b) {
+      return d3.descending(parseInt(a.event_id), parseInt(b.event_id));
+    });
+    const nestedTurkey = d3.nest()
+      .key(function (d) { return d.animal_id; })
+      .entries(singleTurkeySorted);
 
+    nestedTurkey.forEach(function (turkey) {
+      let turkeyObj = {
+        "type": "Feature",
+        "geometry": { /* append geometryObj */ },
+        "properties": { /* append propertiesObj */ }
+      };
+      let movementObj = {
+        "type": "LineString",
+        "coordinates": []
+      };
+      let turkeyProperties = {
+        "study_timezone": ""
+      };
+
+      turkey.values.forEach(function (movement) {
+        movementObj.coordinates.push([+movement.longitude, +movement.latitude])
+      })
+
+      turkeyObj.geometry = movementObj;
+      turkeyProperties.study_timezone = turkey.values[0].study_timezone;
+      turkeyObj.properties = turkeyProperties;
+
+      featureCollection.features.push(turkeyObj)
+
+    });
+
+    console.log(featureCollection);
+
+    svg.append('path')
+      .attr('class', 'flight-path')
+      .attr('d', geoPath(featureCollection))
+      .attr('fill', 'none');
+
+  }
+  
 })()
