@@ -73,7 +73,7 @@ d3.csv(urls.migration, (error, data) => {
 
     featureCollection.features.push(turkeyObj)
 
-    // console.log(geoPath(featureCollection));
+    console.log(JSON.stringify(featureCollection));
 
     // const land = topojson.feature(data, world.objects.land);
     const render = () => path
