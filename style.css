@@ -10,6 +10,14 @@ svg {
 .land {
   fill: #CCCCCC;
 }
+.lakes {
+  fill: #3399CC;
+}
+.rivers {
+  stroke: #3399CC;
+  stroke-width: 0.3px;
+  fill: none;
+}
 .flight-path {
   stroke: #FF00FF;
 }

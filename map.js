@@ -60,7 +60,12 @@
       then get .features out of it
     */
     const land = topojson.feature(world, world.objects.ne_50m_land).features;
+    const lakes = topojson.feature(world, world.objects.ne_50m_lakes).features;
+    const rivers = topojson.feature(world, world.objects.ne_50m_rivers_lake_centerlines).features;
 
+    console.log(lakes);
+    console.log(rivers);
+    
     /*
       Add a path for each country
       Shapes -> paths
@@ -70,6 +75,20 @@
       .enter().append('path')
       .attr('class', 'land')
       .attr('d', geoPath);
+
+    svg.selectAll('.lakes')
+      .data(lakes)
+      .enter().append('path')
+      .attr('class', 'lakes')
+      .attr('d', geoPath)
+      .attr('fill', 'none');
+
+    svg.selectAll('.rivers')
+      .data(rivers)
+      .enter().append('path')
+      .attr('class', 'rivers')
+      .attr('d', geoPath)
+      .attr('fill', 'none');
 
     const featureCollection = {
       "type": "FeatureCollection",
