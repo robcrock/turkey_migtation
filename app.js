@@ -174,14 +174,11 @@ function ready(error, world, data) {
     .attr('cy', function (d, i) {
       return projection(d.geometry.coordinates[i])[1];
     })
-    .attr('r', '5');
+    .attr('r', '3');
 
   const dropDownList = nested.map(function(d) {
-    console.log(d);
     return d.key;
   });
-
-  console.log(dropDownList);
 
   // populate drop-down
   d3.select("#dropdown")
@@ -212,13 +209,15 @@ function ready(error, world, data) {
   }
 
   function delta(path) {
+
     let l = path.getTotalLength();
+    let p0 = path.getPointAtLength(0)
+
     return function (i) {
       return function (t) {
-        let p = path.getPointAtLength(t * l);
-        console.log(p);
-        let x = projection([p.x, p.y])[0];
-        let y = projection([p.x, p.y])[1];
+        let p1 = path.getPointAtLength(t * l);
+        let x = p1.x - p0.x;
+        let y = p1.y - p0.y;
         return `translate( ${x} , ${y} )`;
       }
     }
