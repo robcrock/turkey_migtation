@@ -173,33 +173,39 @@ function ready(error, world, data) {
       return projection(d.geometry.coordinates[i])[1];
     })
     .attr('r', '5');
-    // .attr('transform', function(d) {
-    //   console.log(d)
-    // });
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////// Animate migration
 ////////////////////////////////////////////////////////////////////////////////
 
-  // function transition(turkey, route) {
+  function transition(turkeyName) {;
 
-  //   turkey.transition()
-  //     .duration(10000)
-  //     .attrTween("transform", delta(route.node()));
+    // let bird = d3.select('.circle .mac');
+    // let flightPath = d3.select('.route .mac');
 
-  // }
+    let turkey = turkeys.filter(turkeyName);
+    let flightPath = flightPaths.filter(turkeyName);
 
-  // function delta(path) {
-  //   var l = path.getTotalLength();
+    turkey
+      .transition()
+      .duration(5000)
+      .attrTween("transform", delta(flightPath.node()));
 
-  //   return function (i) {
-  //     return function (t) {
-  //       var p = path.getPointAtLength(t * l);
-  //       return `translate( ${p.x} , ${p.y} )`;
-  //     }
-  //   }
-  // }
+  }
 
-  // transition(turkeys, flightPaths);
+  function delta(path) {
+    let l = path.getTotalLength();
+    return function (i) {
+      return function (t) {
+        let p = path.getPointAtLength(t * l);
+        // let x = projection([p.x, p.y])[0];
+        // let y = projection([p.x, p.y])[1];
+
+        return `translate( ${p.x - 130} , ${p.y - 35} )`;
+      }
+    }
+  }
+
+  transition('.mac')
 
 };
