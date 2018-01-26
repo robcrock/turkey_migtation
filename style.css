@@ -2,26 +2,28 @@ svg {
   background: #efefef
 }
 .sphere {
-  fill: #3399CC;
+  fill: #A8DADE;
 }
 .graticule {
-  fill: #3399CC;
+  fill: #A8DADE;
 }
 .land {
-  fill: #CCCCCC;
+  fill: #B6D891;
 }
 .lakes {
-  fill: #3399CC;
+  fill: #76B3C0;
 }
 .rivers {
-  stroke: #3399CC;
+  stroke: #76B3C0;
   stroke-width: 0.3px;
   fill: none;
 }
 .turkey {
-  stroke: #D3D3D3;
-  stroke-width: 0.5px;
+  fill: #000000;
+  stroke: #010101;
+  stroke-width: 0.0215;
 }
 .route {
-  stroke: #FF00FF;
+  stroke: #B0B3A9;
+  stroke-width: 0.3px;
 }
