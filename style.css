@@ -1,5 +1,5 @@
-svg {
-  background: #efefef
+.container {
+  width: 700px !important;
 }
 .sphere {
   fill: #A8DADE;
@@ -26,4 +26,7 @@ svg {
 .route {
   stroke: #929292c5;
   stroke-width: 0.5px;
+}
+.selected {
+  fill: #52B6AC;
 }

@@ -3,24 +3,54 @@
 <head>
   <meta charset='utf-8' />
   <title>Turkey Migration</title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" type="text/css" href="style.css" />
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="//d3js.org/topojson.v1.min.js"></script>
-  <script src="https://d3js.org/d3-array.v1.min.js"></script>
+  <!-- <script src="https://d3js.org/d3-array.v1.min.js"></script> -->
   <script src="https://d3js.org/d3-geo.v1.min.js"></script>
   <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-  <script>
-
-    var aitoff = d3.geoAitoff();
-
-  </script>
+  <script>var aitoff = d3.geoAitoff();</script>
 </head>
 
-<body id="map">
-  <select id="dropdown"></select>
-  <!-- <svg width="960" height="500"></svg> -->
+<body>
+  <div class="container">
+    <div id="dropdown" class="input-field">
+      <select>
+        <option value="" selected>Choose your Turkey</option>
+        <option value="Irma">Irma</option>
+        <option value="Rosalie">Rosalie</option>
+        <option value="Morongo">Morongo</option>
+        <option value="Mac">Mac</option>
+        <option value="Leo">Leo</option>
+        <option value="Young Luro">Young Luro</option>
+        <option value="Domingo">Domingo</option>
+        <option value="Steamhouse 1">Steamhouse 1</option>
+        <option value="Steamhouse 2">Steamhouse 2</option>
+        <option value="Mark">Mark</option>
+        <option value="Mary">Mary</option>
+        <option value="Disney">Disney</option>
+        <option value="Schaumboch">Schaumboch</option>
+        <option value="La Pampa">La Pampa</option>
+        <option value="Whitey">Whitey</option>
+        <option value="Argentina">Argentina</option>
+        <option value="Prado">Prado</option>
+        <option value="Sarkis">Sarkis</option>
+        </select>
+      </select>
+      <label>Which Turkey do you want to take off?</label>
+    </div>
+    <div id="map" class="col s1"></div>
+  </div>
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script src="app.js"></script>
-
 </body>
 
 </html>
