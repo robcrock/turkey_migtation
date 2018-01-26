@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 const margin = { top: 50, left: 50, right: 50, bottom: 50 },
-  height = 800 - margin.top - margin.bottom,
+  height = 600 - margin.top - margin.bottom,
   width = 600 - margin.left - margin.right;
 
 const svg = d3.select('#map')
@@ -112,9 +112,11 @@ function ready(error, world, data) {
 ////////////////////////////////////////////////////////// Set up geo projection
 ////////////////////////////////////////////////////////////////////////////////
 
-  const projection = d3.geoTwoPointEquidistant([-90, 15], [-60, 15])
-    .translate([width / 2, height / 2.65])
-    .scale(300);
+  const projection = d3.geoOrthographic()
+    .scale(250)
+    .translate([width / 2, height / 2])
+    .clipAngle(90 + 1e-6)
+    .rotate([85,0]);
 
   const geoPath = d3.geoPath()
     .projection(projection);
@@ -174,23 +176,39 @@ function ready(error, world, data) {
     })
     .attr('r', '5');
 
+  const dropDownList = nested.map(function(d) {
+    console.log(d);
+    return d.key;
+  });
+
+  console.log(dropDownList);
+
+  // populate drop-down
+  d3.select("#dropdown")
+    .selectAll("option")
+    .data(dropDownList)
+    .enter().append("option")
+      .attr("value", d => d )
+      .text(d => d);
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////// Animate migration
 ////////////////////////////////////////////////////////////////////////////////
 
+  // dropdown dataset selection
+  const dropDown = d3.select("#dropdown");
+
+  dropDown.on("change", function () {
+    transition(`.${d3.event.target.value.toLowerCase()}`)
+  });
+
   function transition(turkeyName) {;
-
-    // let bird = d3.select('.circle .mac');
-    // let flightPath = d3.select('.route .mac');
-
     let turkey = turkeys.filter(turkeyName);
     let flightPath = flightPaths.filter(turkeyName);
-
     turkey
       .transition()
       .duration(5000)
       .attrTween("transform", delta(flightPath.node()));
-
   }
 
   function delta(path) {
@@ -198,14 +216,14 @@ function ready(error, world, data) {
     return function (i) {
       return function (t) {
         let p = path.getPointAtLength(t * l);
-        // let x = projection([p.x, p.y])[0];
-        // let y = projection([p.x, p.y])[1];
-
-        return `translate( ${p.x - 130} , ${p.y - 35} )`;
+        console.log(p);
+        let x = projection([p.x, p.y])[0];
+        let y = projection([p.x, p.y])[1];
+        return `translate( ${x} , ${y} )`;
       }
     }
   }
 
-  transition('.mac')
+  
 
 };
