@@ -161,9 +161,11 @@ function ready(error, world, data) {
     .attr('d', geoPath)
     .attr('fill', 'none');
 
-  const flightPaths = svg.append('path')
-    .attr('class', 'route')
-    .attr('d', geoPath(featureCollection.features[3]))
+  const flightPaths = svg.selectAll('.route')
+    .data(featureCollection.features)
+    .enter().append('path')
+    .attr('class', d => `route ${d.properties.animal_id}`)
+    .attr('d', geoPath)
     .attr('fill', 'none');
 
   const turkeys = svg.append("circle")
@@ -176,25 +178,25 @@ function ready(error, world, data) {
 ////////////////////////////////////////////////////////////// Animate migration
 ////////////////////////////////////////////////////////////////////////////////
 
-  function transition(turkey, route) {
+  // function transition(turkey, route) {
 
-    turkey.transition()
-      .duration(10000)
-      .attrTween("transform", delta(route.node()));
+  //   turkey.transition()
+  //     .duration(10000)
+  //     .attrTween("transform", delta(route.node()));
 
-  }
+  // }
 
-  function delta(path) {
-    var l = path.getTotalLength();
+  // function delta(path) {
+  //   var l = path.getTotalLength();
 
-    return function (i) {
-      return function (t) {
-        var p = path.getPointAtLength(t * l);
-        return `translate( ${p.x} , ${p.y} )`;
-      }
-    }
-  }
+  //   return function (i) {
+  //     return function (t) {
+  //       var p = path.getPointAtLength(t * l);
+  //       return `translate( ${p.x} , ${p.y} )`;
+  //     }
+  //   }
+  // }
 
-  transition(turkeys, flightPaths);
+  // transition(turkeys, flightPaths);
 
 };
