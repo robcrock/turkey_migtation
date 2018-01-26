@@ -160,14 +160,16 @@ function ready(error, world, data) {
   const flightPaths = svg.selectAll('.route')
     .data(featureCollection.features)
     .enter().append('path')
-    .attr('class', d => `route ${d.properties.animal_id}`)
+    .attr('class', d => `route ${d.properties.animal_id.split(' ').join('').toLowerCase()}`)
     .attr('d', geoPath)
     .attr('fill', 'none');
 
   const turkeys = svg.selectAll('.turkey')
     .data(featureCollection.features)
     .enter().append('circle')
-    .attr("class", d => `turkey ${d.properties.animal_id}`)
+    .attr("class", function(d) {
+      return `turkey ${d.properties.animal_id.split(' ').join('').toLowerCase()}`;
+    })
     .attr('cx', function(d, i) {
       return projection(d.geometry.coordinates[i])[0];
     })
@@ -196,7 +198,7 @@ function ready(error, world, data) {
   const dropDown = d3.select("#dropdown");
 
   dropDown.on("change", function () {
-    transition(`.${d3.event.target.value.toLowerCase()}`)
+    transition(`.${d3.event.target.value.split(' ').join('').toLowerCase()}`)
   });
 
   function transition(turkeyName) {;
