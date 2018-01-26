@@ -106,13 +106,7 @@ function ready(error, world, data) {
 
   });
 
-  console.log(featureCollection);
-
-  featureCollection.features.forEach(function(d) {
-    console.log(d.properties.animal_id);
-  })
-
-  // console.log(featureCollection);
+  console.log(featureCollection.features);
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////// Set up geo projection
@@ -168,11 +162,20 @@ function ready(error, world, data) {
     .attr('d', geoPath)
     .attr('fill', 'none');
 
-  const turkeys = svg.append("circle")
-    .attr("class", "turkey")
-    .attr('cx', '0')
-    .attr('cy', '0')
+  const turkeys = svg.selectAll('.turkey')
+    .data(featureCollection.features)
+    .enter().append('circle')
+    .attr("class", d => `turkey ${d.properties.animal_id}`)
+    .attr('cx', function(d, i) {
+      return projection(d.geometry.coordinates[i])[0];
+    })
+    .attr('cy', function (d, i) {
+      return projection(d.geometry.coordinates[i])[1];
+    })
     .attr('r', '5');
+    // .attr('transform', function(d) {
+    //   console.log(d)
+    // });
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////// Animate migration
